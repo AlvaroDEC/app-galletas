@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#616F81" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Duna" />
+    <title>Duna — Producción y stock</title>
+
+    <!--
+      Los dos logos se precargan. El de color, para que la pantalla de inicio no
+      aparezca vacía. El de máscara, porque la barra de marca lo usa como
+      mask-image y sin precarga la marca queda en blanco durante el primer
+      pintado — poco tiempo, pero se nota justo al abrir, que es lo peor.
+    -->
+    <link rel="preload" as="image" href="/logo-duna.png" />
+    <link rel="preload" as="image" href="/logo-duna-mask.png" />
+
+    <!--
+      La pantalla de inicio vive acá, en el HTML, y no en el JavaScript.
+      Así aparece apenas llega el documento, sin esperar a que descargue el
+      resto de la app. Es lo contrario de un splash que retrasa: usa el tiempo
+      de carga que ya existía, en vez de agregar uno nuevo.
+    -->
+    <style>
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.2rem;
+        background: #616f81;
+        transition: opacity 340ms ease;
+      }
+      #splash.fuera {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #splash img {
+        width: min(64vw, 340px);
+        height: auto;
+      }
+      #splash .barra {
+        width: 108px;
+        height: 3px;
+        border-radius: 2px;
+        background: rgba(247, 239, 225, 0.22);
+        overflow: hidden;
+      }
+      #splash .barra i {
+        display: block;
+        height: 100%;
+        width: 38%;
+        border-radius: 2px;
+        background: #f7efe1;
+        animation: splashCarga 1.15s ease-in-out infinite;
+      }
+      @keyframes splashCarga {
+        from { transform: translateX(-110%); }
+        to   { transform: translateX(330%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #splash { transition: none; }
+        #splash .barra i { animation: none; width: 100%; }
+      }
+    </style>
+    <script>
+      // Momento en que el usuario empezó a ver la pantalla de inicio. Sirve para
+      // que se muestre un mínimo de tiempo y no parpadee cuando la carga es
+      // instantánea.
+      window.__splashDesde = Date.now()
+    </script>
+  </head>
+  <body>
+    <div id="splash">
+      <img src="/logo-duna.png" alt="Duna — Galletas Artesanales" width="1000" height="242" />
+      <div class="barra"><i></i></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

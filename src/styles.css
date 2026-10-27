@@ -1,0 +1,698 @@
+/* ==========================================================================
+   Galletas Artesanales DUNA — hoja de estilos única.
+
+   La paleta viene del menú del negocio: azul pizarra (#616F81) sobre crema
+   (#F7EFE1). El azul se oscurece un paso para que sirva de color de acción
+   con contraste suficiente sobre blanco y sobre crema.
+   Ámbar para lo que hay que mirar, rojo sólo para lo que ya se rompió.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+  --ground: #161a20;
+  --surface: #1d232b;
+  --surface-2: #252c36;
+  --surface-3: #2f3742;
+  --line: #333c48;
+  --line-soft: #28303a;
+  --ink: #ede7dc;
+  --ink-2: #c3cad3;
+  --muted: #8b95a2;
+  --faint: #6e7885;
+
+  --accent: #9bb0c8;
+  --accent-ink: #131920;
+  --accent-soft: #23303e;
+  --accent-line: #3b4c60;
+
+  --warn: #ddaa55;
+  --warn-soft: #2e2718;
+  --warn-line: #57492c;
+
+  --crit: #e8897a;
+  --crit-soft: #33201c;
+  --crit-line: #5c3730;
+
+  --ok: #6fc095;
+  --ok-soft: #17291f;
+
+  --tipo-galleta: #f2c58a;
+  --tipo-galleta-soft: #46290f;
+  --tipo-masa: #e8d9a0;
+  --tipo-masa-soft: #393015;
+  --tipo-relleno: #ff9ec1;
+  --tipo-relleno-soft: #4a2440;
+  --tipo-extra: #cdb0ff;
+  --tipo-extra-soft: #382a55;
+  --tipo-topping: #a4e8d6;
+  --tipo-topping-soft: #1d4238;
+
+  --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --sombra-2: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 26px -18px rgba(0, 0, 0, 0.9);
+  --sombra-3: 0 24px 60px -20px rgba(0, 0, 0, 0.85);
+
+  --r-1: 6px;
+  --r-2: 10px;
+  --r-3: 16px;
+
+  --serif: "Iowan Old Style", Charter, "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --nav-h: 62px;
+}
+
+/* El color de fondo de Duna es el azul pizarra oscuro, siempre igual — no
+   cambia según el modo del sistema. La paleta crema queda disponible sólo
+   si el documento la pide explícitamente (data-theme="light"). */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ground: #f8f1e6;
+  --surface: #ffffff;
+  --surface-2: #f2e9db;
+  --surface-3: #e7dccb;
+  --line: #e0d6c4;
+  --line-soft: #eee6d8;
+  --ink: #26303c;
+  --ink-2: #4b5866;
+  --muted: #78848f;
+  --faint: #98a2ac;
+
+  --accent: #4a5768;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6e9ee;
+  --accent-line: #b4bdc9;
+
+  --warn: #8a5a12;
+  --warn-soft: #f7ead3;
+  --warn-line: #dfc08a;
+
+  --crit: #9c3527;
+  --crit-soft: #f8e2dd;
+  --crit-line: #e3aea4;
+
+  --ok: #2f6b4a;
+  --ok-soft: #dfede4;
+
+  --tipo-galleta: #8a4e0d;
+  --tipo-galleta-soft: #f9e3c6;
+  --tipo-masa: #6f5c1e;
+  --tipo-masa-soft: #f1e9cf;
+  --tipo-relleno: #a0245f;
+  --tipo-relleno-soft: #f9dbea;
+  --tipo-extra: #5b3dc4;
+  --tipo-extra-soft: #ece4fb;
+  --tipo-topping: #166a5e;
+  --tipo-topping-soft: #d8efe9;
+
+  --sombra-1: 0 1px 2px rgba(38, 48, 60, 0.07);
+  --sombra-2: 0 1px 2px rgba(38, 48, 60, 0.07), 0 10px 26px -18px rgba(38, 48, 60, 0.45);
+  --sombra-3: 0 24px 60px -20px rgba(38, 48, 60, 0.4);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 { margin: 0; font-weight: 650; line-height: 1.2; text-wrap: balance; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ------------------------------------------------------------- estructura */
+
+.app { display: flex; min-height: 100%; }
+
+.sidebar {
+  display: none;
+  width: 232px;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 2px;
+  padding: 1.1rem .7rem;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* El logotipo real de Duna, recortado del menú del negocio.
+   Se pinta como máscara para que tome el color del tema: tinta sobre crema en
+   modo claro, crema sobre pizarra en modo oscuro. Una sola imagen, dos temas. */
+.logotipo {
+  display: block;
+  aspect-ratio: 600 / 145;
+  background-color: currentColor;
+  -webkit-mask: url(/logo-duna-mask.png) no-repeat center / contain;
+  mask: url(/logo-duna-mask.png) no-repeat center / contain;
+}
+
+.marca {
+  display: flex; flex-direction: column; align-items: flex-start; gap: .4rem;
+  padding: .3rem .55rem 1.15rem;
+  color: var(--ink);
+}
+.marca .logotipo { width: 152px; }
+.marca-estado {
+  font-family: var(--mono); font-size: .62rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Barra de marca del celular. En pantalla grande manda la barra lateral. */
+.barra-marca {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  min-height: 48px; padding: .5rem 1rem;
+  background: var(--ground);
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink);
+}
+.barra-marca .logotipo { width: 88px; flex-shrink: 0; }
+@media (min-width: 900px) {
+  .barra-marca { display: none; }
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .58rem .6rem;
+  border: 0; background: none; width: 100%;
+  border-radius: var(--r-1);
+  color: var(--ink-2);
+  font-size: .93rem; font-weight: 500;
+  cursor: pointer; text-align: left;
+}
+.nav-item:hover { background: var(--surface-2); color: var(--ink); }
+.nav-item[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 640; }
+.nav-item .ico { width: 20px; text-align: center; font-size: 1rem; flex-shrink: 0; }
+.nav-item .globo {
+  margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px;
+  display: grid; place-items: center;
+  background: var(--crit); color: #fff;
+  border-radius: 10px; font-family: var(--mono); font-size: .68rem; font-weight: 600;
+}
+.nav-sep {
+  height: 1px; background: var(--line-soft); margin: .6rem .6rem;
+}
+
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.contenido {
+  flex: 1;
+  padding: 1rem 1rem calc(var(--nav-h) + 1.4rem);
+  max-width: 1080px; width: 100%; margin: 0 auto;
+  display: flex; flex-direction: column; gap: .6875rem;
+}
+
+/* barra inferior en celular */
+.barra-inferior {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* En pantalla grande manda el menú lateral y la barra inferior desaparece.
+   Este bloque va después de las reglas base a propósito: si va antes, la
+   declaración de .barra-inferior lo pisa por orden de cascada. */
+@media (min-width: 900px) {
+  .sidebar { display: flex; }
+  .contenido { padding: 1.6rem 2rem 3rem; gap: .6875rem; }
+  .barra-inferior { display: none; }
+}
+
+/* Transición entre pantallas: la que se va hace un pliegue corto y la que
+   entra se despliega con un respiro. Se mueve sólo el contenido, no la
+   barra ni el encabezado, y se respeta la preferencia de menos movimiento. */
+.pantalla-animada {
+  display: flex; flex-direction: column; gap: .6875rem;
+  animation: pantallaEntra .24s cubic-bezier(.22, .68, 0, 1) backwards;
+}
+.pantalla-animada.salir { animation: pantallaSale .15s ease both; }
+@keyframes pantallaEntra {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pantallaSale {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pantalla-animada, .pantalla-animada.salir { animation: none; }
+}
+
+/* Hoja y telón: entran deslizándose desde abajo y se pliegan al cerrar.
+   Cubre todas las funciones que abren un panel (nueva receta, ficha de
+   insumo, pedido, menú "Más"...). */
+.telon { animation: telonEntra .2s ease backwards; }
+.telon-fuera { animation: telonSale .18s ease both; }
+.hoja { animation: hojaEntra .28s cubic-bezier(.22, .68, 0, 1) backwards; }
+.hoja-fuera { animation: hojaSale .18s ease both; }
+@keyframes telonEntra { from { opacity: 0; } }
+@keyframes telonSale { to { opacity: 0; } }
+@keyframes hojaEntra {
+  from { transform: translateY(60px); opacity: .6; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes hojaSale {
+  to { transform: translateY(60px); opacity: 0; }
+}
+
+/* Cada tarjeta que se monta (un formulario, un detalle, una lista nueva)
+   respira al aparecer. No vuelve a animar si sólo cambia su contenido. */
+.pantalla-animada .tarjeta { animation: tarjetaEntra .26s cubic-bezier(.22, .68, 0, 1) backwards; }
+@keyframes tarjetaEntra {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Filtros de categoría: el contenido entra deslizándose desde el lado hacia
+   el que se avanza. "Todos -> Secos" entra desde la derecha; volver, desde
+   la izquierda. Se aplica sólo cuando cambia el filtro (key), no al buscar. */
+.insumos-slide { display: flex; flex-direction: column; gap: .6875rem; }
+.insumos-slide.entra-der { animation: insumosDer .5s cubic-bezier(.16, .84, .26, 1) backwards; }
+.insumos-slide.entra-izq { animation: insumosIzq .5s cubic-bezier(.16, .84, .26, 1) backwards; }
+@keyframes insumosDer {
+  from { opacity: 0; transform: translateX(38px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes insumosIzq {
+  from { opacity: 0; transform: translateX(-38px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .telon, .telon-fuera, .hoja, .hoja-fuera,
+  .pantalla-animada .tarjeta,
+  .insumos-slide.entra-der, .insumos-slide.entra-izq { animation: none; }
+}
+.tab {
+  border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: .5rem 0 .45rem;
+  color: var(--muted); font-size: .66rem; font-weight: 560;
+  position: relative;
+}
+.tab .ico { font-size: 1.22rem; line-height: 1; }
+.tab[aria-current="page"] { color: var(--accent); }
+.tab .punto {
+  position: absolute; top: .45rem; right: 50%; margin-right: -16px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--crit); border: 2px solid var(--surface);
+}
+
+/* --------------------------------------------------------------- cabecera */
+
+.cabecera { display: flex; flex-direction: column; gap: .2rem; padding-top: .3rem; }
+.cabecera-fila { display: flex; align-items: flex-start; gap: 1rem; justify-content: space-between; }
+.cabecera h1 { font-family: var(--serif); font-size: 1.6rem; letter-spacing: -.015em; font-weight: 600; }
+.cabecera p { margin: 0; color: var(--muted); font-size: .9rem; max-width: 62ch; }
+@media (min-width: 900px) { .cabecera h1 { font-size: 1.9rem; } }
+
+.eyebrow {
+  font-family: var(--mono); font-size: .66rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- tarjetas */
+
+.tarjeta {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2);
+  box-shadow: var(--sombra-1);
+}
+.tarjeta-pad { padding: 1rem; }
+@media (min-width: 900px) { .tarjeta-pad { padding: 1.15rem 1.25rem; } }
+
+.tarjeta-cab {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .85rem 1rem; border-bottom: 1px solid var(--line-soft);
+}
+.tarjeta-cab h2 { font-size: 1rem; font-weight: 640; }
+.tarjeta-cab .eyebrow { font-size: .63rem; }
+
+.rejilla { display: grid; gap: .6875rem; }
+.rejilla-2 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.rejilla-3 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.rejilla-4 { grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); }
+
+/* La pantalla de Hoy usa algo más de aire: tarjetas, números y filas
+   menos apretados que en el resto de la app. */
+.pantalla-hoy { display: flex; flex-direction: column; gap: .6875rem; }
+.pantalla-hoy .rejilla { gap: .6875rem; }
+.pantalla-hoy .stat { padding: .9rem .95rem; gap: .22rem; }
+.pantalla-hoy .acciones { gap: .6rem; }
+
+/* En Vender los avisos (el de "sin factura", los de empaque y los de stock)
+   llevan un poco más de aire para que no se peguen a la tarjeta de galletas. */
+.pantalla-vender { display: flex; flex-direction: column; gap: .6875rem; }
+.pantalla-vender .aviso { padding: .95rem 1.1rem; }
+
+/* ------------------------------------------------------------------ stats */
+
+.stat {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-2); padding: .8rem .9rem;
+  display: flex; flex-direction: column; gap: .18rem;
+  box-shadow: var(--sombra-1);
+}
+.stat .rotulo {
+  font-family: var(--mono); font-size: .63rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+}
+.stat .valor {
+  font-size: 1.5rem; font-weight: 660; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+.stat .pie { font-size: .78rem; color: var(--muted); }
+.stat.acento { background: var(--accent-soft); border-color: var(--accent-line); }
+.stat.acento .valor, .stat.acento .rotulo { color: var(--accent); }
+
+/* ---------------------------------------------------------------- botones */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+  padding: .58rem .95rem; min-height: 42px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  border-radius: var(--r-1); font-size: .93rem; font-weight: 570;
+  cursor: pointer; white-space: nowrap;
+  transition: background .12s ease, border-color .12s ease;
+}
+.btn:hover:not(:disabled) { background: var(--surface-2); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.btn-primario { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primario:hover:not(:disabled) { background: var(--accent); filter: brightness(1.08); }
+
+.btn-fantasma { background: none; border-color: transparent; color: var(--ink-2); }
+.btn-fantasma:hover:not(:disabled) { background: var(--surface-2); }
+
+.btn-peligro { color: var(--crit); border-color: var(--crit-line); background: var(--crit-soft); }
+.btn-peligro:hover:not(:disabled) { filter: brightness(0.97); }
+
+.btn-grande { width: 100%; min-height: 54px; font-size: 1.02rem; font-weight: 620; }
+.btn-chico { min-height: 34px; padding: .3rem .6rem; font-size: .82rem; }
+
+.acciones { display: flex; gap: .6rem; flex-wrap: wrap; }
+.acciones-fin { justify-content: flex-end; }
+
+/* ---------------------------------------------------------------- campos */
+
+.campo { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+.campo > label {
+  font-family: var(--mono); font-size: .64rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+}
+.campo .ayuda { font-size: .78rem; color: var(--muted); }
+
+.input, .select, textarea.input {
+  width: 100%; padding: .55rem .7rem; min-height: 42px;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--r-1);
+  font-size: .95rem;
+}
+.input:focus, .select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.input.num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+textarea.input { min-height: 72px; resize: vertical; line-height: 1.45; }
+.select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2rem;
+}
+
+/* buscador con escritura: el input + la lista que aparece debajo */
+.buscador { position: relative; }
+.buscador-opciones {
+  position: absolute; z-index: 20; inset-inline: 0; top: calc(100% + .3rem);
+  max-height: 260px; overflow-y: auto;
+  margin: 0; padding: .3rem;
+  list-style: none;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--r-1); box-shadow: 0 10px 30px rgb(0 0 0 / .25);
+}
+.buscador-opciones li + li { margin-top: .15rem; }
+.buscador-opciones button {
+  display: block; width: 100%; text-align: left;
+  padding: .5rem .6rem; border-radius: var(--r-1);
+  border: none; background: none; color: var(--ink);
+  font-size: .9rem; cursor: pointer;
+}
+.buscador-opciones button:hover,
+.buscador-opciones button.activo { background: var(--accent-soft); }
+.buscador-vacio { padding: .5rem .6rem; color: var(--muted); font-size: .85rem; }
+
+.fila-campos { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+
+/* grupo de opciones tipo segmento */
+.segmento { display: flex; flex-wrap: wrap; gap: .4rem; }
+.segmento button {
+  padding: .45rem .8rem; min-height: 40px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink-2);
+  border-radius: var(--r-1); font-size: .88rem; font-weight: 550; cursor: pointer;
+}
+.segmento button[aria-pressed="true"] {
+  background: var(--accent-soft); border-color: var(--accent-line); color: var(--accent); font-weight: 620;
+}
+
+/* contador con − y + para el celular */
+.contador { display: flex; align-items: stretch; gap: 0; }
+.contador button {
+  width: 46px; min-height: 46px; flex-shrink: 0;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font-size: 1.2rem; font-weight: 600; cursor: pointer;
+}
+.contador button:first-child { border-radius: var(--r-1) 0 0 var(--r-1); }
+.contador button:last-child { border-radius: 0 var(--r-1) var(--r-1) 0; }
+.contador button:hover:not(:disabled) { background: var(--surface-2); }
+.contador button:disabled { opacity: .4; cursor: not-allowed; }
+.contador input {
+  flex: 1; min-width: 0; text-align: center; border-radius: 0;
+  border: 1px solid var(--line); border-left: 0; border-right: 0;
+  background: var(--surface); color: var(--ink);
+  font-family: var(--mono); font-size: 1.05rem; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------- píldoras */
+
+.pildora {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .07em; text-transform: uppercase;
+  padding: .18rem .45rem; border-radius: 4px; font-weight: 600;
+  background: var(--surface-2); color: var(--muted); white-space: nowrap;
+}
+.pildora.ok { background: var(--ok-soft); color: var(--ok); }
+.pildora.warn { background: var(--warn-soft); color: var(--warn); }
+.pildora.critica { background: var(--crit-soft); color: var(--crit); }
+.pildora.acento { background: var(--accent-soft); color: var(--accent); }
+
+/* Píldora compacta: etiqueta de tipo de receta en listas. */
+.pildora.mini {
+  font-size: .6rem; letter-spacing: .04em; font-weight: 620;
+  padding: .12rem .38rem; border-radius: 4px;
+  background: var(--surface-2); color: var(--muted);
+}
+
+/* Cada tipo de receta tiene su propio color, siguiendo la idea culinaria:
+   galleta tostada, masa cruda, rellenos de fruta, extras brillantes, toppings verdes. */
+.pildora.mini.tipo-galleta { background: var(--tipo-galleta-soft); color: var(--tipo-galleta); }
+.pildora.mini.tipo-masa { background: var(--tipo-masa-soft); color: var(--tipo-masa); }
+.pildora.mini.tipo-relleno { background: var(--tipo-relleno-soft); color: var(--tipo-relleno); }
+.pildora.mini.tipo-extra { background: var(--tipo-extra-soft); color: var(--tipo-extra); }
+.pildora.mini.tipo-topping { background: var(--tipo-topping-soft); color: var(--tipo-topping); }
+
+/* ---------------------------------------------------------------- listas */
+
+.lista { display: flex; flex-direction: column; }
+.lista > * + * { border-top: 1px solid var(--line-soft); }
+
+.fila {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .8rem 1rem; width: 100%;
+  background: none; border: 0; text-align: left; color: inherit;
+}
+button.fila { cursor: pointer; }
+button.fila:hover { background: var(--surface-2); }
+.fila-cuerpo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .1rem; }
+.fila-titulo { font-weight: 570; font-size: .95rem; display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+.fila-sub { font-size: .8rem; color: var(--muted); }
+.fila-fin { text-align: right; display: flex; flex-direction: column; gap: .1rem; flex-shrink: 0; }
+.fila-fin .n { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 620; font-size: .95rem; }
+.fila-fin .s { font-size: .74rem; color: var(--muted); font-family: var(--mono); }
+
+.avatar {
+  width: 38px; height: 38px; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: var(--surface-2); border-radius: 10px; font-size: 1.15rem;
+}
+
+/* Barra de nivel de stock.
+   Los modificadores llevan prefijo propio a propósito: usar `.aviso` suelto
+   chocaba con el componente de alerta, que también se llama así. */
+.nivel { height: 4px; background: var(--surface-3); border-radius: 2px; overflow: hidden; margin-top: .3rem; }
+.nivel > i { display: block; height: 100%; border-radius: 2px; background: var(--ok); }
+.nivel--aviso > i { background: var(--warn); }
+.nivel--critica > i { background: var(--crit); }
+
+/* ---------------------------------------------------------------- avisos */
+
+.aviso {
+  display: flex; gap: .7rem; align-items: flex-start;
+  padding: .8rem .95rem; border-radius: var(--r-2);
+  border: 1px solid var(--line); background: var(--surface);
+  font-size: .89rem;
+}
+.aviso .ico { font-size: 1.05rem; line-height: 1.3; flex-shrink: 0; }
+.aviso-cuerpo { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.aviso b { font-weight: 620; }
+.aviso span { color: var(--ink-2); }
+.aviso.acento { background: var(--accent-soft); border-color: var(--accent-line); }
+.aviso.aviso-warn { background: var(--warn-soft); border-color: var(--warn-line); }
+.aviso.aviso-crit { background: var(--crit-soft); border-color: var(--crit-line); }
+
+/* Los avisos sueltos comparten el mismo aire que el resto de las secciones:
+   nada de márgenes especiales. */
+
+/* --------------------------------------------------------------- tablas */
+
+.scroll-x { overflow-x: auto; }
+table.tabla { width: 100%; border-collapse: collapse; font-size: .87rem; }
+table.tabla th, table.tabla td {
+  padding: .5rem .75rem; text-align: left; white-space: nowrap;
+  border-bottom: 1px solid var(--line-soft);
+}
+table.tabla thead th {
+  font-family: var(--mono); font-size: .63rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; background: var(--surface-2);
+}
+table.tabla tbody tr:last-child td { border-bottom: 0; }
+table.tabla td.n, table.tabla th.n {
+  text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums;
+}
+table.tabla tfoot td {
+  font-weight: 640; background: var(--surface-2); border-top: 1px solid var(--line);
+}
+
+/* --------------------------------------------------------------- modales */
+
+.telon {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(22, 28, 36, .48);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0;
+}
+@media (min-width: 720px) { .telon { align-items: center; padding: 2rem 1rem; } }
+
+.hoja {
+  background: var(--surface);
+  width: 100%; max-width: 560px;
+  max-height: 92vh; overflow-y: auto;
+  border-radius: var(--r-3) var(--r-3) 0 0;
+  box-shadow: var(--sombra-3);
+  display: flex; flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@media (min-width: 720px) { .hoja { border-radius: var(--r-3); max-height: 86vh; } }
+.hoja-ancha { max-width: 720px; }
+
+.hoja-cab {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem 1.1rem .75rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.hoja-cab h2 { font-size: 1.1rem; font-family: var(--serif); font-weight: 600; }
+.hoja-cuerpo { padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .95rem; }
+.hoja-pie {
+  position: sticky; bottom: 0;
+  background: var(--surface); border-top: 1px solid var(--line-soft);
+  padding: .85rem 1.1rem; display: flex; gap: .6rem;
+}
+.hoja-pie .btn { flex: 1; }
+
+.cerrar {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border: 0; background: var(--surface-2); border-radius: 50%;
+  font-size: 1.1rem; line-height: 1; cursor: pointer; color: var(--ink-2);
+}
+.cerrar:hover { background: var(--surface-3); }
+
+/* --------------------------------------------------------------- varios */
+
+.vacio {
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  padding: 2.4rem 1.2rem; text-align: center; color: var(--muted);
+}
+.vacio .ico { font-size: 2rem; opacity: .5; }
+.vacio b { color: var(--ink-2); font-weight: 600; }
+.vacio p { margin: 0; font-size: .88rem; max-width: 42ch; }
+
+.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.silencio { color: var(--muted); }
+.mini { font-size: .8rem; }
+.centrado { text-align: center; }
+.entre { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.pila { display: flex; flex-direction: column; gap: .85rem; }
+.pila-chica { display: flex; flex-direction: column; gap: .45rem; }
+.envoltura { display: flex; flex-wrap: wrap; gap: .45rem; }
+
+.cinta {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem .8rem; font-size: .82rem;
+  background: var(--warn-soft); color: var(--warn);
+  border: 1px solid var(--warn-line); border-radius: var(--r-1);
+}
+
+/* Botón y overlay de las flores amarillas */
+.flores-boton { opacity: .65; }
+.flores-boton:hover:not(:disabled) { opacity: 1; background: var(--surface-2); }
+
+.flores-telon {
+  position: fixed; inset: 0; z-index: 80;
+  background: #000;
+  display: flex; align-items: stretch; justify-content: stretch;
+}
+.flores-marco { border: 0; width: 100%; height: 100%; }
+.flores-cerrar {
+  position: fixed; top: max(.75rem, env(safe-area-inset-top)); right: .75rem; z-index: 3;
+  width: 42px; height: 42px; font-size: 1.2rem;
+  box-shadow: var(--sombra-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* gráficos */
+/* El alto y el ancho los pone el componente en píxeles reales; el CSS no debe
+   pisarlos o el dibujo se estira y los puntos dejan de ser redondos. */
+.grafico { display: block; max-width: 100%; overflow: visible; }
+.g-barra { fill: var(--accent); }
+.g-barra-tenue { fill: var(--accent-line); }
+.g-eje { stroke: var(--line); stroke-width: 1; }
+.g-rotulo { fill: var(--muted); font-family: var(--mono); font-size: 9px; }
+.g-valor { fill: var(--ink-2); font-family: var(--mono); font-size: 9.5px; font-weight: 600; }
+.g-area { fill: var(--accent-soft); }
+.g-linea { stroke: var(--accent); stroke-width: 2; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.g-punto { fill: var(--accent); }
+.g-grilla { stroke: var(--line-soft); stroke-width: 1; }
